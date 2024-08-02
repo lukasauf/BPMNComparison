@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+levenshtein = "*"
+markdown2 = "*"
+sentence-transformers = "*"
+scikit-learn = "*"
+gensim = "*"
+nltk = "*"
+scipy = "==1.10.1"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
