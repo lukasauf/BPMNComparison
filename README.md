@@ -28,7 +28,7 @@ Automate_BPMN_Comparison is a tool for comparing two BPMN models automatically. 
     - `pipenv shell`
 6. execute python script
     - `python main.py [args]` or `pipenv run python main.py [args]` (step 5 can be skipped here)
-    - to execute 'python main.py' in the virtual environment, you need to add some arguments (run 'python main.py --help for further usage information)
+    - to execute `python main.py` in the virtual environment, you need to add some arguments (run `python main.py --help` for further usage information)
  
 
 
