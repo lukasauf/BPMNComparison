@@ -1,6 +1,6 @@
 # main.py
 from src.cli.cli import main as frontend_main
-from src.parser.parser import BPMN
+from src.BPMN.bpmn import BPMN
 from src.evaluation.metrics import calculate_tp_fp_fn, calculate_jaccard_index, calculate_recall, calculate_precision, calculate_node_matching_sim
 from src.evaluation.threshold_determination import determine_threshold
 from src.similarity.HighLevel.EdgeMatching import compare_models_em
