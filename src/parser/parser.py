@@ -1,9 +1,8 @@
-from frontend.bpmn_loader import import_mmd_file
-from helper.helpers import check_index_access
+from src.util.helpers import check_index_access
 
 class BPMN:
     """
-    Stores all releevant information for BPMN (Business Process Model and Notation) models.
+    Stores all relevant information for BPMN (Business Process Model and Notation) models.
 
     Attributes:
         bpmn_str (str): The BPMN model string. (adheres to the conventional guideline)

@@ -1,10 +1,10 @@
 # main.py
-from frontend.cli import main as frontend_main
-from backend.parser import BPMN
-from backend.evaluation.metrics import calculate_tp_fp_fn, calculate_jaccard_index, calculate_recall, calculate_precision, calculate_node_matching_sim
-from backend.evaluation.threshold_determination import determine_threshold
-from backend.similarity.HighLevel.EdgeMatching import compare_models_em
-from backend.similarity.HighLevel.NodeMatching import compare_models_nm
+from src.cli.cli import main as frontend_main
+from src.parser.parser import BPMN
+from src.evaluation.metrics import calculate_tp_fp_fn, calculate_jaccard_index, calculate_recall, calculate_precision, calculate_node_matching_sim
+from src.evaluation.threshold_determination import determine_threshold
+from src.similarity.HighLevel.EdgeMatching import compare_models_em
+from src.similarity.HighLevel.NodeMatching import compare_models_nm
 import sys
 
 def run_node_matching(sm, gm, weights, threshold):

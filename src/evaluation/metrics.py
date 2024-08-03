@@ -1,4 +1,4 @@
-from helper.helpers import check_index_access
+from src.util.helpers import check_index_access
 import sys 
 
 def calculate_tp_fp_fn(sm_list_edges, gm_list_edges):

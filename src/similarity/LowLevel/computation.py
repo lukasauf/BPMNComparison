@@ -1,6 +1,6 @@
-from backend.similarity.LowLevel.bert import compute_bert_similarity
-from backend.similarity.LowLevel.glove import compute_glove_similarity
-from backend.similarity.LowLevel.syntactic import compute_syntactic_similarity
+from src.similarity.LowLevel.bert import compute_bert_similarity
+from src.similarity.LowLevel.glove import compute_glove_similarity
+from src.similarity.LowLevel.syntactic import compute_syntactic_similarity
 import sys
 
 def compute_similarity(sm_element, gm_elements, weights):

@@ -4,8 +4,8 @@ import gensim.downloader as api
 from nltk.tokenize import word_tokenize
 from scipy.spatial.distance import cosine
 from gensim.models import KeyedVectors
-from backend.similarity.LowLevel.syntactic import compute_syntactic_similarity
-from helper.helpers import check_index_access
+from src.similarity.LowLevel.syntactic import compute_syntactic_similarity
+from src.util.helpers import check_index_access
 # Define the model path
 model_path = 'glove-wiki-gigaword-300'
 

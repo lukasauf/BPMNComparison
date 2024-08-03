@@ -1,6 +1,6 @@
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
-from helper.helpers import check_index_access
+from src.util.helpers import check_index_access
 
 
 def compute_bert_similarity(tuple):

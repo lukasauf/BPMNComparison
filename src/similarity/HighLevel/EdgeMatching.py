@@ -1,6 +1,6 @@
 # Importing libraries for similarity score
-from backend.similarity.LowLevel.computation import compute_similarity
-from helper.helpers import *
+from src.similarity.LowLevel.computation import compute_similarity
+from src.util.helpers import *
 
 
 def create_gm_parents(list_edges, events, tasks, gateways):

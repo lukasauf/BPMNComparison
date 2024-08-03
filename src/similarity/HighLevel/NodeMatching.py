@@ -1,8 +1,8 @@
 # Importing libraries for similarity score
 
-from helper.helpers import check_index_access
-from helper.helpers import get_value
-from backend.similarity.LowLevel.computation import compute_similarity
+from src.util.helpers import check_index_access
+from src.util.helpers import get_value
+from src.similarity.LowLevel.computation import compute_similarity
 """_summary_
 """
 
