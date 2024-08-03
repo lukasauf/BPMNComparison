@@ -9,6 +9,7 @@ Automate_BPMN_Comparison is a tool for comparing two BPMN models automatically. 
 * **testing/pet/xml**: the models in BPMN2.0 format with process descriptions (TODO)
 * **testing/pet/GM**: the 7 generated models stored in .mmd files
 * **testing/pet/SM**: the 7 standard models stored in .mmd files
+* **testing/pet/example_manual_evaluation.xlsx**: the manual evaluation of the 7 pairs of models
 
 <h1> Virtual Environment </h1>
 
