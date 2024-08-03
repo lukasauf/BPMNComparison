@@ -28,6 +28,7 @@ def run_node_matching(sm, gm, weights, threshold):
     print(f"Precision: {precision}")
     print(f"Jaccard Index: {jaccard_index}\n")
 
+
 def run_edge_matching(sm, gm, weights, threshold):  
     compare_models_em(sm, gm, weights, threshold)
     # Calculate metrics
