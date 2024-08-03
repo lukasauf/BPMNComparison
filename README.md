@@ -17,8 +17,6 @@ Automate_BPMN_Comparison is a tool for comparing two BPMN models automatically. 
 
 <h1> Execution </h1>
 
-* **examples.py**: example to test the funtionality
-
 1. clone the repo
    - `git clone <repo_name>`
 2. navigate to the Automate_BPMN_Comparison directory
