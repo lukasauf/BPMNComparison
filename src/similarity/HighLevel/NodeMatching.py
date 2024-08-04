@@ -43,7 +43,6 @@ def compare_models_nm(sm, gm, weights, threshold):
     gm_values = list(gm.tasks.values())
     
     for sm_key in sm.tasks:
-        compare_nodes = [sm.tasks[sm_key]] + gm_values
         similarity_scores = compute_similarity(sm.tasks[sm_key], gm_values, weights)
         max_value, max_index = max_with_index(similarity_scores)
         print(f'Max value is {max_value} and max index is {max_index}')

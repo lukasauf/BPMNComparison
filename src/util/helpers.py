@@ -19,25 +19,23 @@ def check_index_access(list, i):
         sys.exit(1)
         
 
-def get_value(key, events, tasks, gateways):
+def get_value(key, model):
     """
     Get the value of the key (stored in the list_edges list) for comparison
 
     Args:
         key (str): Unique key linked to a single element of the BPMN model  
-        events (dict): A dictionary storing keys and their corresponding values for events.
-        tasks (dict): A dictionary storing keys and their corresponding values for tasks.
-        gateways (dict): A dictionary storing keys and their corresponding values for gateways.
+        model (BPMN): BPMN model to be considered for searching key
 
     Returns:
-        str: Value linked to the key of the BPMN model
+        str: Value linked to the key of the BPMN model (could be a task/event/gateway)
     """
     if 'event' in key:
-        return events[key]
+        return model.events[key]
     elif 'task' in key:
-        return tasks[key]
+        return model.tasks[key]
     elif 'gateway' in key:
-        return gateways[key]
+        return model.gateways[key]
     else:
         print("Error: Invalid key!")
         sys.exit(1) 
