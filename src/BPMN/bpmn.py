@@ -110,7 +110,7 @@ class BPMN:
             key_child, value_child = self.extract_key_value(child)
             key_parent = key_parent.strip()
             key_child = key_child.strip()
-            self.edges.append([key_parent, key_child, 0])
+            self.edges.append([key_parent, key_child])
 
             self.determine_event_task_gateway(key_parent, value_parent)
             self.determine_event_task_gateway(key_child, value_child)

@@ -30,9 +30,11 @@ def run_node_matching(sm, gm, weights, threshold):
 
 
 def run_edge_matching(sm, gm, weights, threshold):  
-    compare_models_em(sm, gm, weights, threshold)
+    opt_eq_map = compare_models_em(sm, gm, weights, threshold)
     # Calculate metrics
-    tp, fp , fn = calculate_tp_fp_fn(sm.edges, gm.edges)
+    tp = len(opt_eq_map)
+    fp = len(sm.edges) - tp
+    fn = len(gm.edges) - tp
     jaccard_index = calculate_jaccard_index(tp, fp, fn)
     recall = calculate_recall(tp, fn)
     precision = calculate_precision(tp, fp)
@@ -46,6 +48,7 @@ def run_edge_matching(sm, gm, weights, threshold):
     print(f"Recall: {recall}")
     print(f"Precision: {precision}")
     print(f"Jaccard Index: {jaccard_index}\n")  
+    print(f'Optimal Eq. Mapping is {opt_eq_map}')
 
 def run():
     sm_model_str, gm_model_str, version, weights, threshold = frontend_main()

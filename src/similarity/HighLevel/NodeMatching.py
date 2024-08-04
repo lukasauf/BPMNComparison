@@ -49,7 +49,7 @@ def compare_models_nm(sm, gm, weights, threshold):
         
         if max_value > threshold:
             gm_key = gm_keys[max_index]
-            #ensure that nodes should only be mapped 1:1 and not i.e. 1:n
+            #ensure that nodes should only be mapped 1:1 and not i.e. n:1
             if all(sm_key != pair[0] for pair in opt_eq_map) and all(gm_key != pair[1] for pair in opt_eq_map):
                 print('****************************')
                 print(f'sm_key is {sm_key} and gm_key is {gm_key}')

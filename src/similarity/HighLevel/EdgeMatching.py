@@ -80,7 +80,7 @@ def compare_models_em(sm, gm, weights, threshold):
     gm_parents = create_gm_parents(gm)
     #print('GENERATED MODEL FORMATTED PARENTS ARE:')
     #print(gm_parents)
-    
+    opt_eq_map = []
     #iterate over entire sm_list_edges 
     for i, sm_edge in enumerate(sm.edges):
         print('****************************')
@@ -88,6 +88,7 @@ def compare_models_em(sm, gm, weights, threshold):
         print('****************************')
         
         print('LEFT/PARENT SIDE')
+        
         aimed_indices_parent = []
         aimed_indices_child = []
         #first compare the left side of SM and GM list_edges
@@ -128,16 +129,12 @@ def compare_models_em(sm, gm, weights, threshold):
             check_index_access(gm.edges, gm_edge_index)
             check_index_access(gm.edges[gm_edge_index], 0)
             check_index_access(gm.edges[gm_edge_index], 1)
-            check_index_access(gm.edges[gm_edge_index], 2)
             check_index_access(sm_edge, 0)
             check_index_access(sm_edge, 1)
-            check_index_access(sm_edge, 2)
+            
             #the edge of the gm has no match yet (if it already has one, skip) AND the types of the matches must be equivalent (e.g. excl.gateway and parallelgateway are not the same!)
-            if gm.edges[gm_edge_index][2] == 0 and get_type(sm_edge[0]) == get_type(gm.edges[gm_edge_index][0]) and get_type(sm_edge[1]) == get_type(gm.edges[gm_edge_index][1]):
-                print(f'Type of sm left is {get_type(sm_edge[0])} and type of gm left is {get_type(gm.edges[gm_edge_index][0])}')
-                print(f'Type of sm right is {get_type(sm_edge[1])} and type of gm right is {get_type(gm.edges[gm_edge_index][1])}')
-                sm_edge[2] = 1
-                gm.edges[gm_edge_index][2] = 1
+            if all(sm_edge != pair[0] for pair in opt_eq_map) and all(gm.edges[gm_edge_index] != pair[1] for pair in opt_eq_map) and get_type(sm_edge[0]) == get_type(gm.edges[gm_edge_index][0]) and get_type(sm_edge[1]) == get_type(gm.edges[gm_edge_index][1]):
+                opt_eq_map.append((sm_edge, gm.edges[gm_edge_index]))
                 print(f'MARKED INDEX {i} of SM as TRUE POSITIVE!!!!')
                 print(f'CORRESPONDING INDEX {gm_edge_index} OF GM TRUE POSITIVE!!!!!')
             #print('****************************')       
@@ -148,7 +145,7 @@ def compare_models_em(sm, gm, weights, threshold):
     
     print('Final GM TUPLE:')
     print(gm.edges)
-    return
+    return opt_eq_map
 
 
         
