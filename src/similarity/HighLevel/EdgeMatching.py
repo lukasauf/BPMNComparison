@@ -65,7 +65,7 @@ def get_aimed_indices(similarity_scores, threshold):
             max = similarity_score        
     return aimed_indices
 
-def types_equivalent(sm_edge, gm_edge, opt_eq_map):
+def types_equivalent(sm_edge, gm_edge):
     """
     Check whether the types of parent/child nodes of SM and GM are equivalent, so they can be matched
 
