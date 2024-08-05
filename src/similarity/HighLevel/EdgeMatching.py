@@ -3,7 +3,7 @@ from src.similarity.LowLevel.computation import compute_similarity
 from src.util.helpers import *
 
 
-def create_gm_parents(gm):
+def get_gm_parents(gm):
     """
     Get the values of the left side of the GM --> for all the parent nodes of the model
 
@@ -19,7 +19,7 @@ def create_gm_parents(gm):
         parents.append(get_value(edge[0], gm))
     return parents    
          
-def create_gm_children(gm, aimed_indices):
+def get_gm_children(gm, aimed_indices):
     """
     Get the values of the right side of the GM --> for all the children nodes of the model
 
@@ -64,6 +64,24 @@ def get_aimed_indices(similarity_scores, threshold):
                 aimed_indices = [i]
             max = similarity_score        
     return aimed_indices
+
+def types_equivalent(sm_edge, gm_edge, opt_eq_map):
+    """
+    Check whether the types of parent/child nodes of SM and GM are equivalent, so they can be matched
+
+    Args:
+        sm_edge (list): Edge of the SM, where the first element in the list is the parent side and the second element is the children side
+        gm_edge (list): Edge of the GM, where the first element in the list is the parent side and the second element is the children side
+        
+    Returns:
+        bool: Boolean indicating whether the types are equivalent
+    """
+    
+    check_index_access(gm_edge, 0)
+    check_index_access(gm_edge, 1)
+    check_index_access(sm_edge, 0)
+    check_index_access(sm_edge, 1)
+    return get_type(sm_edge[0]) == get_type(gm_edge[0]) and get_type(sm_edge[1]) == get_type(gm_edge[1])
              
 def compare_models_em(sm, gm, weights, threshold):
     """
@@ -77,7 +95,7 @@ def compare_models_em(sm, gm, weights, threshold):
         threshold (float): Threshold for accepting the similarity value: Let elem1 and elem2 be text labels,  if sim(elem1, elem2) > threshold --> elem1 and elem2 are considered equal 
     """
     #format gm_list_edges correctly to compare with sm_list_edges
-    gm_parents = create_gm_parents(gm)
+    gm_parents = get_gm_parents(gm)
     #print('GENERATED MODEL FORMATTED PARENTS ARE:')
     #print(gm_parents)
     opt_eq_map = []
@@ -113,7 +131,7 @@ def compare_models_em(sm, gm, weights, threshold):
         sm_child = get_value(sm_edge[1], sm)
         
         #TODO: to be replaced by respective similarity function
-        gm_children = create_gm_children(gm, aimed_indices_parent)
+        gm_children = get_gm_children(gm, aimed_indices_parent)
         similarity_scores = compute_similarity(sm_child, gm_children, weights)
         aimed_indices_child = get_aimed_indices(similarity_scores, threshold)
         print('****************************')
@@ -121,22 +139,15 @@ def compare_models_em(sm, gm, weights, threshold):
         #find true positives
         for i_right in aimed_indices_child:
             check_index_access(aimed_indices_parent, i_right)
-            
-            #correct index of similar gm_edge
-            gm_edge_index = aimed_indices_parent[i_right]
+            check_index_access(gm.edges, aimed_indices_parent[i_right])
+            gm_edge = gm.edges[aimed_indices_parent[i_right]]
             #set true positives for sm and gm
             
-            check_index_access(gm.edges, gm_edge_index)
-            check_index_access(gm.edges[gm_edge_index], 0)
-            check_index_access(gm.edges[gm_edge_index], 1)
-            check_index_access(sm_edge, 0)
-            check_index_access(sm_edge, 1)
-            
             #the edge of the gm has no match yet (if it already has one, skip) AND the types of the matches must be equivalent (e.g. excl.gateway and parallelgateway are not the same!)
-            if all(sm_edge != pair[0] for pair in opt_eq_map) and all(gm.edges[gm_edge_index] != pair[1] for pair in opt_eq_map) and get_type(sm_edge[0]) == get_type(gm.edges[gm_edge_index][0]) and get_type(sm_edge[1]) == get_type(gm.edges[gm_edge_index][1]):
-                opt_eq_map.append((sm_edge, gm.edges[gm_edge_index]))
+            if all(sm_edge != pair[0] for pair in opt_eq_map) and all(gm_edge != pair[1] for pair in opt_eq_map) and types_equivalent(sm_edge, gm_edge):
+                opt_eq_map.append((sm_edge, gm_edge))
                 print(f'MARKED INDEX {i} of SM as TRUE POSITIVE!!!!')
-                print(f'CORRESPONDING INDEX {gm_edge_index} OF GM TRUE POSITIVE!!!!!')
+                print(f'CORRESPONDING INDEX {aimed_indices_parent[i_right]} OF GM TRUE POSITIVE!!!!!')
             #print('****************************')       
         print(f'INDEX: {i} ENDING')
         
