@@ -37,7 +37,7 @@ def compute_glove_similarity(sm_element, gm_elements):
     print('****************************\n')
     print(f'SM_element is {sm_element} and GM_elements are {gm_elements}')
     for gm_element in gm_elements:
-        similarity = compute_phrase_similarity_glove(sm_element, gm_element)
+        similarity = glove_similarity(sm_element, gm_element)
         # threshold must be added
         similarities.append(similarity)
     print(f'Similarities are {similarities}')
@@ -45,8 +45,9 @@ def compute_glove_similarity(sm_element, gm_elements):
     return similarities
     
 # Function to compute similarity between two BPMN elements
-def compute_phrase_similarity_glove(sm_element, gm_element):
+def glove_similarity(sm_element, gm_element):
     sm_element = word_tokenize(sm_element.lower())
+    print(f'TYPE OF GM_ELEMENT IS {type(gm_element)}')
     gm_element = word_tokenize(gm_element.lower())
     sm_vectors = [model[word] for word in sm_element if word in model]
     gm_vectors = [model[word] for word in gm_element if word in model]

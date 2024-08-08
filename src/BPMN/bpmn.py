@@ -10,8 +10,8 @@ class BPMN:
         tasks (dict): A dictionary storing keys and their corresponding values for tasks.
         gateways (dict): A dictionary storing keys and their corresponding values for gateways.
         edges (list): A list of lists where each list represents an edge in the BPMN model.
-                        Each tuple contains the key_parent, key_child.
-                        Let a --> b be an edge, then a is the parent and b is the child
+                        Each tuple contains the key_source, key_target.
+                        Let a --> b be an edge, then a is the source and b is the target
     """
 
     def __init__(self, bpmn_str):
@@ -94,21 +94,21 @@ class BPMN:
             if i == 0 or i == len(edges_input) - 1:
                 continue
 
-            child_parent_edge = edge.split(splitter)
+            target_source_edge = edge.split(splitter)
 
-            check_index_access(child_parent_edge, 0)
-            check_index_access(child_parent_edge, 1)
-            parent = child_parent_edge[0].strip()
-            child = child_parent_edge[1].strip()
+            check_index_access(target_source_edge, 0)
+            check_index_access(target_source_edge, 1)
+            source = target_source_edge[0].strip()
+            target = target_source_edge[1].strip()
 
-            key_parent, value_parent = self.__extract_key_value(parent)
-            key_child, value_child = self.__extract_key_value(child)
-            key_parent = key_parent.strip()
-            key_child = key_child.strip()
-            self.edges.append([key_parent, key_child])
+            key_source, value_source = self.__extract_key_value(source)
+            key_target, value_target = self.__extract_key_value(target)
+            key_source = key_source.strip()
+            key_target = key_target.strip()
+            self.edges.append([key_source, key_target])
 
-            self.__determine_event_task_gateway(key_parent, value_parent)
-            self.__determine_event_task_gateway(key_child, value_child)
+            self.__determine_event_task_gateway(key_source, value_source)
+            self.__determine_event_task_gateway(key_target, value_target)
 
         return 
 
