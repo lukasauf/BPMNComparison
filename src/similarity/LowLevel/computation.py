@@ -5,7 +5,8 @@ import sys
 
 def compute_similarity(sm_element, gm_elements, weights):
     """
-    Compute the low level similarity between sm_element and the gm_elements
+    Compute the low level similarity between sm_element and the gm_elements with respect to
+    the input weights
 
     Args:
         sm_element (str): The text element for which the similarity is to be computed.

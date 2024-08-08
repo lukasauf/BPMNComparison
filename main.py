@@ -7,6 +7,28 @@ from src.similarity.HighLevel.EdgeMatching import compare_models_em
 from src.similarity.HighLevel.NodeMatching import compare_models_nm
 import sys
 
+"""
+Main entry point for the automation tool. 
+
+Functions:
+    run_node_matching(sm, gm, weights, threshold):
+        Compares nodes of Standard Model (SM) and Generated Model (GM) using given weights and threshold.
+        Computes and prints the optimal equivalence mapping, recall, precision, and Jaccard index.
+
+    run_edge_matching(sm, gm, weights, threshold):
+        Compares edges of Standard Model (SM) and Generated Model (GM) using given weights and threshold.
+        Computes and prints the optimal equivalence mapping, recall, precision, and Jaccard index.
+
+    run():
+        Main function to execute the appropriate matching algorithm (node or edge) based on the version specified.
+        Parses input, initializes BPMN models, and calls the corresponding matching function.
+
+Usage:
+    Execute the script to run the matching algorithm with provided inputs (run 'python main.py --help' for further information).
+
+"""
+
+
 def run_node_matching(sm, gm, weights, threshold):
     opt_eq_map = compare_models_nm(sm, gm, weights, threshold)
     print(f'Optimal equivalence mapping is {opt_eq_map}')
@@ -17,7 +39,7 @@ def run_node_matching(sm, gm, weights, threshold):
     jaccard_index = calculate_jaccard_index(tp, fp, fn)
     recall = calculate_recall(tp, fn)
     precision = calculate_precision(tp, fp)
-    print('**************FINAL DATA**********\n')
+    print('**************Node matching results:**********\n')
     print(f'tasks in SM: {len(sm.tasks)}')
     print(f'Found: {tp}')
     print(f'Additional: {fn}')
@@ -38,11 +60,11 @@ def run_edge_matching(sm, gm, weights, threshold):
     jaccard_index = calculate_jaccard_index(tp, fp, fn)
     recall = calculate_recall(tp, fn)
     precision = calculate_precision(tp, fp)
-    print('**************FINAL DATA**********\n')
-    print(f'tasks in SM: {len(sm.edges)}')
+    print('**************Edge matching results:**********\n')
+    print(f'edges in SM: {len(sm.edges)}')
     print(f'Found: {tp}')
     print(f'Additional: {fn}')
-    print(f'tasks in GM: {len(gm.edges)}\n')
+    print(f'edges in GM: {len(gm.edges)}\n')
     
     
     print(f"Recall: {recall}")

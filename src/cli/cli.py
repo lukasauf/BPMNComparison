@@ -1,8 +1,39 @@
 import argparse
 import math
 import markdown2
+"""
+This module provides functions to import BPMN models from .mmd files, 
+parse command-line arguments, and prepare inputs for the BPMN process model comparator.
+
+Functions:
+    import_mmd_file(file_path):
+        Read the content of a .mmd file and converts it to a string.
+        Returns the parsed content or None if the file is not found.
+
+    check_sum(values):
+        Ensures that the sum of the provided weight values is approximately 1.0.
+        Raises an argparse.ArgumentTypeError if the sum is not within the tolerance.
+
+    parse_args():
+        Parses command-line arguments required for the BPMN process model comparator.
+        Validates that the weights for the similarity methods sum up to 1.
+        Returns the parsed arguments.
+
+    main():
+        Main function to execute the parsing of command-line arguments and import BPMN models.
+        Prepares and returns the inputs needed for running the comparator.
+"""
 
 def import_mmd_file(file_path):
+    """
+    Read the content of a .mmd file and convert it to a string.
+     
+    Args:
+        file_path (str): File path of the provided BPMN model in .mmd format
+
+    Returns:
+        str: parsed string or None if the file is not found
+    """
     try:
         # Open the .mmd file and read its content
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -15,7 +46,20 @@ def import_mmd_file(file_path):
     except FileNotFoundError:
         print("Error: File not found!")
         return None
+    
 def check_sum(values):
+    """
+    Ensures that the sum of the provided weight values for the low-level similarities is approximately 1.0
+
+    Args:
+        values (list): list of all three weight values (can be extended) to be examined
+
+    Raises:
+        argparse.ArgumentTypeError: If sum is not 1.0 raise error
+
+    Returns:
+        list: input list
+    """
     values_sum = sum(values)
     target_sum = 1.0
     tolerance = 1e-6 
@@ -24,7 +68,12 @@ def check_sum(values):
         raise argparse.ArgumentTypeError(f"The sum of arguments glove_weight, bert_weight, and syntactic_weight must be approximately 1 (current sum: {values_sum})")
     return values
 
+    
 def parse_args():
+    """
+    Parses command-line arguments required for the BPMN process model comparator
+    """
+    
     parser = argparse.ArgumentParser(description="BPMN Process Model Comparator")
     parser.add_argument('--file_sm', required=True, help="Path to the standard model BPMN .mmd file")
     parser.add_argument('--file_gm', required=True, help="Path to the generated model BPMN .mmd file")
@@ -43,7 +92,12 @@ def parse_args():
     
     return args
 
+
 def main():
+    """
+    Main function to execute the parsing of command-line arguments and import BPMN models
+    
+    """
     args = parse_args()
     sm_model = import_mmd_file(args.file_sm)
     gm_model = import_mmd_file(args.file_gm)

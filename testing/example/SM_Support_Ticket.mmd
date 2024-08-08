@@ -1,0 +1,8 @@
+flowchart LR
+1:startevent:((startevent))-->2:task:(receive customer support ticket)
+2:task:-->3:exclusivegateway:{x}
+3:exclusivegateway:{x}-->|issue resolved| 4:task:(close ticket)
+3:exclusivegateway:{x}-->|issue not resolved| 5:task:(propagate to external specialist)
+5:task:-->4:task:
+4:task:-->6:endevent:((endevent))
+

@@ -1,0 +1,8 @@
+graph LR
+1:startevent:((startevent)) --> 2:task:(receive customer support ticket)
+2:task: --> 3:exclusivegateway:{x}
+3:exclusivegateway:{x} --> |issue resolved| 4:task:(close ticket)
+3:exclusivegateway:{x} --> |issue not resolved| 5:task:(request more details from customer)
+5:task: --> 3:exclusivegateway:{x}
+4:task: --> 6:endevent:((endevent))
+

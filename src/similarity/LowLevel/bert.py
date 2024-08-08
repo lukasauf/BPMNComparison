@@ -18,7 +18,6 @@ def compute_bert_similarity(tuple):
     print('COMPARING EVERY EDGE OF SM WITH ALL list_edges IN GM \nContent is:')
     print(tuple)
         
-    # Encoding the sentences to obtain their embeddings
     sentence_embeddings = model.encode(tuple)
     
     check_index_access(sentence_embeddings, 0)
