@@ -2,10 +2,6 @@ from main import run_node_matching
 from main import run_edge_matching
 from src.cli.cli import import_mmd_file
 from src.BPMN.bpmn import BPMN
-from src.evaluation.metrics import calculate_tp_fp_fn, calculate_jaccard_index, calculate_recall, calculate_precision, calculate_node_matching_sim
-from src.evaluation.threshold_determination import determine_threshold
-from src.similarity.HighLevel.EdgeMatching import compare_models_em
-from src.similarity.HighLevel.NodeMatching import compare_models_nm
 
 """
 An example procedure of both matching techniques for the automation tool with the support ticket models. 

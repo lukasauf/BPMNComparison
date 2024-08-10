@@ -5,7 +5,8 @@ import sys
 
 """
 This script evaluates and determines the optimal threshold for edge matching in BPMN models (this threshold will also be used for node matching)
-using three different low-level similarity approaches: syntactic, BERT-based, and GloVe-based similarity.
+using three different low-level similarity approaches: syntactic, BERT-based, and GloVe-based similarity. NOTE: Since BERT is very resource-intensive
+and there are 7 (# of models) * 9 (# of thresholds) = 63 iterations to be executed, this can take some time.
 
 Global Variables:
     weights_syntactic (dict): Weights configuration for evaluating syntactic similarity.
