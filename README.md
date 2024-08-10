@@ -12,7 +12,7 @@ Automate_BPMN_Comparison is a tool for comparing two BPMN models automatically. 
 * **testing/pet/example_manual_evaluation.xlsx**: the manual evaluation of the 7 pairs of models
 
 **Support Ticket Example**
-* **testing/example**: two BPMN models stored in .mmd files about a support ticket procedure 
+* **testing/example**: two BPMN models stored in .mmd files describing two support ticket procedures
   
 
 <h1> Virtual Environment </h1>
