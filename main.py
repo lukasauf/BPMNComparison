@@ -1,8 +1,7 @@
 # main.py
 from src.cli.cli import main as frontend_main
 from src.BPMN.bpmn import BPMN
-from src.evaluation.metrics import calculate_tp_fp_fn, calculate_jaccard_index, calculate_recall, calculate_precision, calculate_node_matching_sim
-from src.evaluation.threshold_determination import determine_threshold
+from src.evaluation.metrics import calculate_jaccard_index, calculate_recall, calculate_precision
 from src.similarity.HighLevel.EdgeMatching import compare_models_em
 from src.similarity.HighLevel.NodeMatching import compare_models_nm
 import sys
@@ -31,7 +30,6 @@ Usage:
 
 def run_node_matching(sm, gm, weights, threshold):
     opt_eq_map = compare_models_nm(sm, gm, weights, threshold)
-    print(f'Optimal equivalence mapping is {opt_eq_map}')
     tp = len(opt_eq_map)
     fp = len(sm.tasks) - tp
     fn = len(gm.tasks) - tp
@@ -49,7 +47,7 @@ def run_node_matching(sm, gm, weights, threshold):
     print(f"Recall: {recall}")
     print(f"Precision: {precision}")
     print(f"Jaccard Index: {jaccard_index}\n")
-
+    print(f'Optimal equivalence mapping is {opt_eq_map}')
 
 def run_edge_matching(sm, gm, weights, threshold):  
     opt_eq_map = compare_models_em(sm, gm, weights, threshold)
@@ -72,13 +70,15 @@ def run_edge_matching(sm, gm, weights, threshold):
     print(f"Jaccard Index: {jaccard_index}\n")  
     print(f'Optimal Eq. Mapping is {opt_eq_map}')
 
+
+
 def run():
     sm_model_str, gm_model_str, version, weights, threshold = frontend_main()
     version = int(version)
     sm = BPMN(sm_model_str)
-    print(f'SM tasks are {sm.tasks}')
+    #print(f'SM tasks are {sm.tasks}')
     gm = BPMN(gm_model_str)
-    print(f'GM tasks are {gm.tasks}')
+    #print(f'GM tasks are {gm.tasks}')
 
 
     '''

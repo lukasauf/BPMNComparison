@@ -26,6 +26,6 @@ def compute_syntactic_similarity(sm_element, gm_elements):
         similarity = syn(sm_element, gm_element)
         # threshold must be added
         similarities.append(similarity)
-    print(f'SYNTACTIC Similarity scores of \"{sm_element}\" and {gm_elements} are:{similarities}')
-    print('****************************\n')
+    #print(f'SYNTACTIC Similarity scores of \"{sm_element}\" and {gm_elements} are:{similarities}')
+    #print('****************************\n')
     return similarities

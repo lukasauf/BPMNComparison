@@ -1,34 +1,22 @@
 from src.util.helpers import check_index_access
 import sys 
 
-def calculate_tp_fp_fn(sm_list_edges, gm_list_edges):
-    """
-    Calculcate the following metrics for the similarity calculation:
-      - True Positives (TP): edges, that are generated and exist in the standard model
-      - False Positives (FP): edges, that are not generated and exist in the standard model 
-      - False Negatives (FN): edges, that are generated and don't exist in the standard model 
+"""
+This module provides functions to calculate key evaluation metrics for comparing models, 
+specifically focusing on the Jaccard Index, recall, and precision.
 
-    Args:
-        sm_list_edges (list): A list of lists where each list represents an edge in the BPMN model (SM)
-        gm_list_edges (list): A list of lists where each list represents an edge in the BPMN model (GM)
-
-    Returns:
-        tuple: A 3- tuple (tp, fp, fn) indicating the TP, FP and FNs of the models.
-    """
-    tp = 0
-    fp = 0
-    for sm_edge in sm_list_edges:
-        check_index_access(sm_edge, 2)
-        if sm_edge[2] == 1:
-            tp += 1
-        elif sm_edge[2] == 0:
-            fp += 1
-        else:
-            print(f"Error: Index 2 is out of bounds for the sm_list_edges with length {len(sm_edge)}.")
-            sys.exit(1)
+Functions:
+    - calculate_jaccard_index(tp, fp, fn): 
+        Calculates the Jaccard Index, which measures the similarity between two models by 
+        comparing the true positives, false positives, and false negatives.
     
-    fn = len(gm_list_edges) - tp
-    return tp, fp, fn
+    - calculate_recall(tp, fn): 
+        Calculates the recall, which measures the ability of a model to identify all relevant instances (true positives)
+        compared to the total relevant instances in the standard model.
+    
+    - calculate_precision(tp, fp): 
+        Calculates the precision, which measures the accuracy of the positive predictions made by the model in comparison to the standard model.
+"""
                        
             
 
@@ -77,5 +65,4 @@ def calculate_precision(tp, fp):
     """
     return tp / (tp + fp)
 
-def calculate_node_matching_sim():
-    return
+

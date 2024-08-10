@@ -15,8 +15,8 @@ def compute_bert_similarity(tuple):
     
     # Initializing the Sentence Transformer model using BERT with mean-tokens pooling
     model = SentenceTransformer('bert-base-nli-mean-tokens')
-    print('COMPARING EVERY EDGE OF SM WITH ALL list_edges IN GM \nContent is:')
-    print(tuple)
+    #print('COMPARING EVERY EDGE OF SM WITH ALL list_edges IN GM \nContent is:')
+    #print(tuple)
         
     sentence_embeddings = model.encode(tuple)
     
@@ -24,7 +24,7 @@ def compute_bert_similarity(tuple):
     # Calculating the cosine similarity between one sm and all gm parts of one side of the tuple
     similarity_scores = cosine_similarity([sentence_embeddings[0]], sentence_embeddings[1:])
     check_index_access(similarity_scores, 0)
-    print(f'BERT Similarity scores are:{similarity_scores[0]}')
+    #print(f'BERT Similarity scores are:{similarity_scores[0]}')
     return similarity_scores[0].tolist()
     
     

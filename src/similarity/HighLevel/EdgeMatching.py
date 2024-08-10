@@ -97,15 +97,15 @@ def compare_models_em(sm, gm, weights, threshold):
     #format gm_list_edges correctly to compare with sm_list_edges
     gm_sources = get_gm_sources(gm)
     #print('GENERATED MODEL FORMATTED sources ARE:')
-    print(f'Gm Sources is {gm_sources} and type is {type(gm_sources)}')
+    #print(f'Gm Sources is {gm_sources} and type is {type(gm_sources)}')
     opt_eq_map = []
     #iterate over entire sm_list_edges 
     for i, sm_edge in enumerate(sm.edges):
-        print('****************************')
-        print(f'INDEX: {i} BEGINNING')
-        print('****************************')
+        #print('****************************')
+        #print(f'INDEX: {i} BEGINNING')
+        #print('****************************')
         
-        print('LEFT/source SIDE')
+        #print('LEFT/source SIDE')
         
         aimed_indices_source = []
         aimed_indices_target = []
@@ -122,11 +122,11 @@ def compare_models_em(sm, gm, weights, threshold):
         if len(aimed_indices_source) == 0:
             continue
            
-        print('****************************')
-        print(f'Aimed index is {aimed_indices_source}')
-        print('****************************')
+        #print('****************************')
+        #print(f'Aimed index is {aimed_indices_source}')
+        #print('****************************')
         
-        print('RIGHT/target SIDE:')
+        #print('RIGHT/target SIDE:')
         check_index_access(sm_edge, 1)
         sm_target = get_value(sm_edge[1], sm)
         
@@ -134,9 +134,9 @@ def compare_models_em(sm, gm, weights, threshold):
         gm_targets = get_gm_targets(gm, aimed_indices_source)
         similarity_scores = compute_similarity(sm_target, gm_targets, weights)
         aimed_indices_target = get_aimed_indices(similarity_scores, threshold)
-        print('#############################################')
-        print(f'AIMED_INDICES_target is {aimed_indices_target}')
-        print('#############################################')
+        #print('#############################################')
+        #print(f'AIMED_INDICES_target is {aimed_indices_target}')
+        #print('#############################################')
         #find true positives
         for i_right in aimed_indices_target:
             check_index_access(aimed_indices_source, i_right)
@@ -147,16 +147,16 @@ def compare_models_em(sm, gm, weights, threshold):
             #the edge of the sm/gm has no match yet (if it already has one, skip) AND the types of the matches must be equivalent (e.g. excl.gateway and parallelgateway are not the same! this is the case for 1_2.mmd Index 6 of SM with BERT similarity)
             if all(sm_edge != pair[0] for pair in opt_eq_map) and all(gm_edge != pair[1] for pair in opt_eq_map) and types_equivalent(sm_edge, gm_edge):
                 opt_eq_map.append((sm_edge, gm_edge))
-                print(f'MARKED INDEX {i} of SM as TRUE POSITIVE!!!!')
-                print(f'CORRESPONDING INDEX {aimed_indices_source[i_right]} OF GM TRUE POSITIVE!!!!!')
+                #print(f'MARKED INDEX {i} of SM as TRUE POSITIVE!!!!')
+                #print(f'CORRESPONDING INDEX {aimed_indices_source[i_right]} OF GM TRUE POSITIVE!!!!!')
             #print('****************************')       
-        print(f'INDEX: {i} ENDING')
+        #print(f'INDEX: {i} ENDING')
         
-    print('Final SM TUPLE:')
-    print(sm.edges)
+    #print('Final SM TUPLE:')
+    #print(sm.edges)
     
-    print('Final GM TUPLE:')
-    print(gm.edges)
+    #print('Final GM TUPLE:')
+    #print(gm.edges)
     return opt_eq_map
 
 
