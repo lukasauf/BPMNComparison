@@ -32,8 +32,8 @@ Automate_BPMN_Comparison is a tool for comparing two BPMN models automatically. 
     - `pipenv shell`
 6. execute python script
     - run `python example.py` for an example of the tool
-    - `python main.py [args]`
-    - to execute `python main.py` in the virtual environment, you need to add some arguments (run `python main.py --help` for further usage information)
+    - `python main.py [args]` to execute the tool
+    --> to execute `python main.py` in the virtual environment, you need to add some arguments (run `python main.py --help` for further usage information)
     - to simulate the determination of the threshold for all 3 text similarity algorithm, execute `python threshold_determination.py`
     - to simulate the evaluation of the 7 selected examples from the [Pet Data Set](https://huggingface.co/datasets/patriziobellan/PET) invoke `python node_matching_evaluation.py`
       or `python edge_matching_evaluation.py`
