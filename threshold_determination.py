@@ -48,7 +48,7 @@ def determine_threshold(weights):
         gm_model_str = import_mmd_file(path_gm)
         sm = BPMN(sm_model_str)
         gm = BPMN(gm_model_str)
-        print(f'\033[1mModel: {model}\033[0m')
+        print(f'\033[1mModel: {model}\033[0m\n')
         for threshold in thresholds:
             print(f'For threshold = {threshold} results are:')
             run_edge_matching(sm, gm, weights, threshold)

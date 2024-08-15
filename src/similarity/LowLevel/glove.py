@@ -25,7 +25,6 @@ def compute_glove_similarity(sm_element, gm_elements):
     """
     Compute the glove similarity between a SM text element and all the elements of GM.
 
-
     Args:
         sm_element (str): The text element for which the similarity is to be computed.
         gm_elements (list of str): A list of text elements to compare against `sm_element`.
@@ -34,18 +33,26 @@ def compute_glove_similarity(sm_element, gm_elements):
         list of float: A list of similarity scores, one for each element in `gm_elements`.
     """
     similarities = []
-    #print('****************************\n')
-    #print(f'SM_element is {sm_element} and GM_elements are {gm_elements}')
+    
     for gm_element in gm_elements:
         similarity = glove_similarity(sm_element, gm_element)
-        # threshold must be added
         similarities.append(similarity)
-    #print(f'Similarities are {similarities}')
-    #print('****************************\n')
+        
     return similarities
     
 # Function to compute similarity between two BPMN elements
 def glove_similarity(sm_element, gm_element):
+    '''
+    Compute the GloVe similarity between a text label of SM and GM.
+
+    Args:
+        sm_element (str): The SM text element for which the similarity is to be computed.
+        gm_element (str): The GM text element for which the similarity is to be computed.
+
+    Returns:
+        float: similarity score between sm_element and gm_element
+    '''
+    
     sm_element = word_tokenize(sm_element.lower())
     #print(f'TYPE OF GM_ELEMENT IS {type(gm_element)}')
     gm_element = word_tokenize(gm_element.lower())

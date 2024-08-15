@@ -2,6 +2,18 @@
 from src.similarity.LowLevel.computation import compute_similarity
 from src.util.helpers import *
 
+"""
+This module provides functions to compare a BPMN Standard Model (SM) and a BPMN Generated Model (GM) using the
+edge matching algorithm. 
+
+Functions:
+    - get_gm_sources(gm): Retrieves source node values from the GM.
+    - get_gm_targets(gm, aimed_indices): Retrieves target node values from the GM for specified indices.
+    - get_aimed_indices(similarity_scores, threshold): Identifies indices of highest similarity scores.
+    - types_equivalent(sm_edge, gm_edge): Checks equivalency of node types between SM and GM edges.
+    - compare_models_em(sm, gm, weights, threshold): Compares SM and GM using the Edge Matching algorithm.
+"""
+
 
 def get_gm_sources(gm):
     """
@@ -55,8 +67,6 @@ def get_aimed_indices(similarity_scores, threshold):
     
     for i, similarity_score in enumerate(similarity_scores):
         
-        #TODO: check for threshold and search for max --> List is used, as there could be more than 1 max
-        # i.e. two exclusivegateways (x) on left side / two or more same tasks on left side
         if similarity_score > threshold and similarity_score >= max:
             if similarity_score == max:
                 aimed_indices.append(i)
@@ -76,7 +86,6 @@ def types_equivalent(sm_edge, gm_edge):
     Returns:
         bool: Boolean indicating whether the types are equivalent
     """
-    
     check_index_access(gm_edge, 0)
     check_index_access(gm_edge, 1)
     check_index_access(sm_edge, 0)
@@ -96,67 +105,40 @@ def compare_models_em(sm, gm, weights, threshold):
     """
     #format gm_list_edges correctly to compare with sm_list_edges
     gm_sources = get_gm_sources(gm)
-    #print('GENERATED MODEL FORMATTED sources ARE:')
-    #print(f'Gm Sources is {gm_sources} and type is {type(gm_sources)}')
     opt_eq_map = []
-    #iterate over entire sm_list_edges 
+    
     for i, sm_edge in enumerate(sm.edges):
-        #print('****************************')
-        #print(f'INDEX: {i} BEGINNING')
-        #print('****************************')
-        
-        #print('LEFT/source SIDE')
-        
         aimed_indices_source = []
         aimed_indices_target = []
-        #first compare the left side of SM and GM list_edges
+        
+        #first compare the source side of SM and GM list_edges
         check_index_access(sm_edge, 0)
         sm_source = get_value(sm_edge[0], sm)
-        
-        #similarity function (cosine, syntactic, ...) can be replaced here
         similarity_scores = compute_similarity(sm_source, gm_sources, weights)
         #the indices of the gm_list_edges where there is a match are stored in aimed_indices_source
         aimed_indices_source = get_aimed_indices(similarity_scores, threshold)
         
-        #no match on left side of sm at sm_edge[i] and gm
+        #no match on source node of sm at sm_edge[i] and gm
         if len(aimed_indices_source) == 0:
             continue
            
-        #print('****************************')
-        #print(f'Aimed index is {aimed_indices_source}')
-        #print('****************************')
-        
-        #print('RIGHT/target SIDE:')
+        # if there is at least one match for the source node check for these edges the target node
         check_index_access(sm_edge, 1)
         sm_target = get_value(sm_edge[1], sm)
-        
-        #TODO: to be replaced by respective similarity function
         gm_targets = get_gm_targets(gm, aimed_indices_source)
         similarity_scores = compute_similarity(sm_target, gm_targets, weights)
         aimed_indices_target = get_aimed_indices(similarity_scores, threshold)
-        #print('#############################################')
-        #print(f'AIMED_INDICES_target is {aimed_indices_target}')
-        #print('#############################################')
+    
         #find true positives
         for i_right in aimed_indices_target:
             check_index_access(aimed_indices_source, i_right)
             check_index_access(gm.edges, aimed_indices_source[i_right])
             gm_edge = gm.edges[aimed_indices_source[i_right]]
-            #set true positives for sm and gm
             
             #the edge of the sm/gm has no match yet (if it already has one, skip) AND the types of the matches must be equivalent (e.g. excl.gateway and parallelgateway are not the same! this is the case for 1_2.mmd Index 6 of SM with BERT similarity)
             if all(sm_edge != pair[0] for pair in opt_eq_map) and all(gm_edge != pair[1] for pair in opt_eq_map) and types_equivalent(sm_edge, gm_edge):
                 opt_eq_map.append((sm_edge, gm_edge))
-                #print(f'MARKED INDEX {i} of SM as TRUE POSITIVE!!!!')
-                #print(f'CORRESPONDING INDEX {aimed_indices_source[i_right]} OF GM TRUE POSITIVE!!!!!')
-            #print('****************************')       
-        #print(f'INDEX: {i} ENDING')
         
-    #print('Final SM TUPLE:')
-    #print(sm.edges)
-    
-    #print('Final GM TUPLE:')
-    #print(gm.edges)
     return opt_eq_map
 
 

@@ -24,7 +24,11 @@ Functions:
         and threshold.
 
     run_nm_evaluation():
-        Evaluates edge matching using all three similarity approaches (syntactic, BERT, GloVe).
+        Evaluates edge matching using one of the three similarity approaches (syntactic, BERT, GloVe) specified by user's input.
+        
+Usage:
+    Execute the script to run the edge matching evaluation      
+        
 """
 
 
@@ -64,6 +68,10 @@ def run_matching(weights, threshold):
 
     
 def run_em_evaluation():
+    """
+    Evaluates edge matching using one of the three similarity approaches (syntactic, BERT, GloVe) 
+    specified by user's input
+    """
     
     input_user = input("Choose the low-level similarity algorithm for the evaluation of the PET data set: \n S for Syntactic \n B for BERT \n G for GloVe\n")
     if input_user == 'S':

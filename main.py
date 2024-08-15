@@ -5,6 +5,7 @@ from src.evaluation.metrics import calculate_jaccard_index, calculate_recall, ca
 from src.similarity.HighLevel.EdgeMatching import compare_models_em
 from src.similarity.HighLevel.NodeMatching import compare_models_nm
 import sys
+import time
 
 """
 Main entry point for the automation tool. 
@@ -29,44 +30,53 @@ Usage:
 
 
 def run_node_matching(sm, gm, weights, threshold):
+    #start_time = time.time()
     opt_eq_map = compare_models_nm(sm, gm, weights, threshold)
+    end_time = time.time()
+    # Calculate runtime
+    #runtime = end_time - start_time
+    #print(f"The algorithm took {runtime:.6f} seconds to run.")
+    
     tp = len(opt_eq_map)
-    fp = len(sm.tasks) - tp
-    fn = len(gm.tasks) - tp
+    fn = len(sm.tasks) - tp
+    fp = len(gm.tasks) - tp
     
     jaccard_index = calculate_jaccard_index(tp, fp, fn)
     recall = calculate_recall(tp, fn)
     precision = calculate_precision(tp, fp)
     print('**************Node matching results:**********\n')
     print(f'tasks in SM: {len(sm.tasks)}')
-    print(f'Found: {tp}')
-    print(f'Additional: {fn}')
+    print(f'Found (TP): {tp}')
+    print(f'Additional (FP): {fp}')
     print(f'tasks in GM: {len(gm.tasks)}\n')
     
-    
-    print(f"Recall: {recall}")
     print(f"Precision: {precision}")
+    print(f"Recall: {recall}")
     print(f"Jaccard Index: {jaccard_index}\n")
     print(f'Optimal equivalence mapping is {opt_eq_map}')
 
 def run_edge_matching(sm, gm, weights, threshold):  
+    #start_time = time.time()
     opt_eq_map = compare_models_em(sm, gm, weights, threshold)
-    # Calculate metrics
+    end_time = time.time()
+    # Calculate runtime
+    #runtime = end_time - start_time
+    #print(f"The algorithm took {runtime:.6f} seconds to run.")
+    
     tp = len(opt_eq_map)
-    fp = len(sm.edges) - tp
-    fn = len(gm.edges) - tp
+    fn = len(sm.edges) - tp
+    fp = len(gm.edges) - tp
     jaccard_index = calculate_jaccard_index(tp, fp, fn)
     recall = calculate_recall(tp, fn)
     precision = calculate_precision(tp, fp)
     print('**************Edge matching results:**********\n')
     print(f'edges in SM: {len(sm.edges)}')
-    print(f'Found: {tp}')
-    print(f'Additional: {fn}')
+    print(f'Found (TP): {tp}')
+    print(f'Additional (FP): {fp}')
     print(f'edges in GM: {len(gm.edges)}\n')
     
-    
-    print(f"Recall: {recall}")
     print(f"Precision: {precision}")
+    print(f"Recall: {recall}")
     print(f"Jaccard Index: {jaccard_index}\n")  
     print(f'Optimal Eq. Mapping is {opt_eq_map}')
 
@@ -76,14 +86,8 @@ def run():
     sm_model_str, gm_model_str, version, weights, threshold = frontend_main()
     version = int(version)
     sm = BPMN(sm_model_str)
-    #print(f'SM tasks are {sm.tasks}')
     gm = BPMN(gm_model_str)
-    #print(f'GM tasks are {gm.tasks}')
 
-
-    '''
-    determine_threshold(sm, gm, weights, threshold, version)
-    '''
     if version == 1:
         run_node_matching(sm, gm, weights, threshold)
     elif version == 2: 
