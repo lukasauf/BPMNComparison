@@ -9,7 +9,7 @@ BPMNComparison is a tool for comparing two BPMN models automatically. Usually th
 * **testing/pet/xml**: the BPMN models in .xml version 
 * **testing/pet/GM**: the 7 generated models stored in .mmd files
 * **testing/pet/SM**: the 7 standard models stored in .mmd files
-* **testing/pet/example_manual_evaluation.xlsx**: the manual evaluation of the 7 pairs of models
+* **testing/pet/evaluation_automated_tool.xlsx**: the evaluation of the 7 pairs of models: summary_manual as ground truth for the automated tool
 
 **Support Ticket Example**
 * **testing/example**: two BPMN models stored in .mmd files describing two support ticket procedures
